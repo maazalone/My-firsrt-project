@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Tanveer"
+description = "A polished browser puzzle game with three playable modes: a sliding tile puzzle, a pattern-memory challenge, and a word-and-logic cipher. Includes difficulty progression, locally saved stats, hints, undo, sound settings, and responsive controls."
+version = "1.0.0"
+id = "artifacts/tanveer"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21681
+
+[services.development]
+run = "pnpm --filter @workspace/tanveer run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/tanveer", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/tanveer/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21681"
+BASE_PATH = "/"
